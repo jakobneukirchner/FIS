@@ -1,0 +1,9 @@
+[[redirects]]
+from = "/driver"
+to = "/driver.html"
+status = 200
+
+[[redirects]]
+from = "/config"
+to = "/config.html"
+status = 200

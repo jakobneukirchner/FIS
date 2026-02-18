@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PIS Konfiguration</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="top-nav">
+    <strong>PIS · Konfiguration</strong>
+    <div class="nav-links">
+      <a href="/">Anzeige</a>
+      <a href="/driver">Fahrer</a>
+      <a href="/config">Konfiguration</a>
+    </div>
+    <span></span>
+  </nav>
+
+  <main class="control-layout">
+    <section class="card">
+      <div class="kicker">Linien</div>
+      <div class="grid-2">
+        <div class="field"><label>ID</label><input id="lineId" /></div>
+        <div class="field"><label>Name</label><input id="lineName" /></div>
+        <div class="field"><label>Produkt</label><input id="lineProduct" placeholder="RE, RB, ICE ..." /></div>
+        <div class="field"><label>Farbe</label><input id="lineColor" type="color" value="#005ca9" /></div>
+      </div>
+      <button id="addLine">Linie hinzufügen</button>
+    </section>
+
+    <section class="card">
+      <div class="kicker">Routen & Halte</div>
+      <div class="grid-2">
+        <div class="field"><label>Route‑ID</label><input id="routeId" /></div>
+        <div class="field"><label>Route‑Name</label><input id="routeName" /></div>
+        <div class="field"><label>Linie</label><select id="routeLine"></select></div>
+      </div>
+      <div class="grid-2">
+        <div class="field"><label>Halte‑ID</label><input id="stopId" /></div>
+        <div class="field"><label>Name</label><input id="stopName" /></div>
+        <div class="field"><label>Gleis</label><input id="stopPlatform" /></div>
+        <div class="field"><label>Planzeit (HH:MM)</label><input id="stopTime" /></div>
+        <div class="field"><label>Türseite</label>
+          <select id="stopDoor">
+            <option value="left">left</option>
+            <option value="right">right</option>
+            <option value="both">both</option>
+          </select>
+        </div>
+      </div>
+      <div class="button-row">
+        <button id="addStop">Stopp zur Route</button>
+        <button id="saveRoute">Route speichern</button>
+      </div>
+      <pre id="routePreview"></pre>
+    </section>
+
+    <section class="card">
+      <div class="kicker">Ansagen</div>
+      <div class="grid-2">
+        <div class="field"><label>Snippet‑ID</label><input id="snippetId" /></div>
+        <div class="field"><label>Text</label><input id="snippetText" /></div>
+      </div>
+      <button id="addSnippet">Snippet hinzufügen</button>
+      <div class="grid-2">
+        <div class="field"><label>Template‑ID</label><input id="templateId" /></div>
+        <div class="field"><label>Name</label><input id="templateName" value="Nächster Halt" /></div>
+      </div>
+      <div class="field">
+        <label>Token‑Sequenz (ein Token pro Zeile: snippet:&lt;id&gt;, text:&lt;wert&gt;, placeholder:&lt;name&gt;)</label>
+        <textarea id="templateTokens" rows="5"></textarea>
+      </div>
+      <button id="saveTemplate">Template speichern</button>
+    </section>
+
+    <section class="card">
+      <div class="button-row">
+        <button id="saveConfig">In localStorage speichern</button>
+        <button id="exportConfig">JSON exportieren</button>
+        <label style="display:inline-flex;align-items:center;gap:.4rem;cursor:pointer;">
+          JSON importieren
+          <input type="file" id="importConfig" accept="application/json" style="display:none" />
+        </label>
+      </div>
+      <textarea id="configRaw" rows="12"></textarea>
+    </section>
+  </main>
+
+  <script src="config-editor.js"></script>
+</body>
+</html>
