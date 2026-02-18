@@ -1,0 +1,57 @@
+{
+  "lines": [
+    {
+      "id": "",
+      "name": "",
+      "color": "#rrggbb",
+      "product": "RE"
+    }
+  ],
+  "routes": [
+    {
+      "id": "",
+      "lineId": "",
+      "name": "",
+      "stops": [
+        {
+          "id": "",
+          "name": "",
+          "platform": "",
+          "plannedDeparture": "",
+          "doorSide": "left"
+        }
+      ]
+    }
+  ],
+  "activeRouteId": "",
+  "activeStopIndex": 0,
+  "delayMinutes": 0,
+  "announcements": {
+    "snippets": [
+      {
+        "id": "",
+        "text": ""
+      }
+    ],
+    "templates": [
+      {
+        "id": "",
+        "name": "Nächster Halt",
+        "tokens": [
+          {
+            "type": "snippet",
+            "snippetId": ""
+          },
+          {
+            "type": "text",
+            "value": ", Gleis "
+          },
+          {
+            "type": "placeholder",
+            "name": "platform"
+          }
+        ]
+      }
+    ]
+  }
+}

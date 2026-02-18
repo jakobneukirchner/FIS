@@ -1,0 +1,2 @@
+# Query-Parameter-Navigation ohne zusätzliche Redirects:
+# /?driver und /?config werden direkt über index.html gerendert.

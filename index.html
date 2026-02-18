@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DB‑orientiertes PIS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="top-nav">
+    <strong id="appTitle">PIS · Fahrgastanzeige</strong>
+    <div class="nav-links">
+      <a href="/" data-view-link="display">Anzeige</a>
+      <a href="/?driver" data-view-link="driver">Fahrer</a>
+      <a href="/?config" data-view-link="config">Konfiguration</a>
+    </div>
+    <div id="clock"></div>
+  </nav>
+
+  <main id="displayView" class="screen app-view">
+    <section class="panel destination-panel">
+      <div class="kicker">Fahrtziel</div>
+      <div id="linePill" class="line-pill">—</div>
+      <h1 id="destination">Keine aktive Route</h1>
+      <div id="viaStops" class="kicker"></div>
+    </section>
+
+    <section class="panel next-stop-panel">
+      <div>
+        <div class="kicker">Nächster Halt</div>
+        <div id="nextStop" class="next-stop">—</div>
+      </div>
+      <div class="status-grid">
+        <div class="status-item">
+          <div class="label">Gleis</div>
+          <div id="platform" class="value">—</div>
+        </div>
+        <div class="status-item">
+          <div class="label">Abfahrt</div>
+          <div id="plannedTime" class="value">—</div>
+        </div>
+        <div class="status-item">
+          <div class="label">Verspätung</div>
+          <div id="delay" class="value">+0 Min</div>
+        </div>
+        <div class="status-item">
+          <div class="label">Ausstieg</div>
+          <div id="doorSide" class="value">—</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="kicker">Informationsbereich</div>
+      <ul id="upcomingStops" class="info-list"></ul>
+      <div id="activeAnnouncement" class="announcement">Aktuelle Ansage: —</div>
+    </section>
+  </main>
+
+  <main id="driverView" class="control-layout app-view is-hidden">
+    <section class="card">
+      <div class="field">
+        <label for="routeSelect">Route wählen</label>
+        <select id="routeSelect"></select>
+      </div>
+      <div class="button-row">
+        <button id="prevStop">Zurück</button>
+        <button id="nextStopBtn">Nächster</button>
+        <button id="setStop">Setzen</button>
+      </div>
+      <p id="activeStopText"></p>
+      <div id="driverStops" class="stop-list"></div>
+    </section>
+
+    <section class="card">
+      <div class="kicker">Verspätung</div>
+      <div class="button-row">
+        <button data-delay="1">+1 Min</button>
+        <button data-delay="5">+5 Min</button>
+        <button id="resetDelay">Reset</button>
+      </div>
+      <p id="delayInfo"></p>
+    </section>
+
+    <section class="card">
+      <div class="field">
+        <label for="templateSelect">Ansage‑Template</label>
+        <select id="templateSelect"></select>
+      </div>
+      <div class="field">
+        <label>Vorschau</label>
+        <textarea id="announcementPreview" rows="4" readonly></textarea>
+      </div>
+      <button id="triggerAnnouncement">Ansage auslösen</button>
+    </section>
+  </main>
+
+  <main id="configView" class="control-layout app-view is-hidden">
+    <section class="card">
+      <div class="kicker">Linien</div>
+      <div class="grid-2">
+        <div class="field"><label>ID</label><input id="lineId" /></div>
+        <div class="field"><label>Name</label><input id="lineName" /></div>
+        <div class="field"><label>Produkt</label><input id="lineProduct" placeholder="RE, RB, ICE ..." /></div>
+        <div class="field"><label>Farbe</label><input id="lineColor" type="color" value="#005ca9" /></div>
+      </div>
+      <button id="addLine">Linie hinzufügen</button>
+    </section>
+
+    <section class="card">
+      <div class="kicker">Routen & Halte</div>
+      <div class="grid-2">
+        <div class="field"><label>Route‑ID</label><input id="routeId" /></div>
+        <div class="field"><label>Route‑Name</label><input id="routeName" /></div>
+        <div class="field"><label>Linie</label><select id="routeLine"></select></div>
+      </div>
+      <div class="grid-2">
+        <div class="field"><label>Halte‑ID</label><input id="stopId" /></div>
+        <div class="field"><label>Name</label><input id="stopName" /></div>
+        <div class="field"><label>Gleis</label><input id="stopPlatform" /></div>
+        <div class="field"><label>Planzeit (HH:MM)</label><input id="stopTime" /></div>
+        <div class="field"><label>Türseite</label>
+          <select id="stopDoor">
+            <option value="left">left</option>
+            <option value="right">right</option>
+            <option value="both">both</option>
+          </select>
+        </div>
+      </div>
+      <div class="button-row">
+        <button id="addStop">Stopp zur Route</button>
+        <button id="saveRoute">Route speichern</button>
+      </div>
+      <pre id="routePreview"></pre>
+    </section>
+
+    <section class="card">
+      <div class="kicker">Ansagen</div>
+      <div class="grid-2">
+        <div class="field"><label>Snippet‑ID</label><input id="snippetId" /></div>
+        <div class="field"><label>Text</label><input id="snippetText" /></div>
+      </div>
+      <button id="addSnippet">Snippet hinzufügen</button>
+      <div class="grid-2">
+        <div class="field"><label>Template‑ID</label><input id="templateId" /></div>
+        <div class="field"><label>Name</label><input id="templateName" value="Nächster Halt" /></div>
+      </div>
+      <div class="field">
+        <label>Token‑Sequenz (ein Token pro Zeile: snippet:&lt;id&gt;, text:&lt;wert&gt;, placeholder:&lt;name&gt;)</label>
+        <textarea id="templateTokens" rows="5"></textarea>
+      </div>
+      <button id="saveTemplate">Template speichern</button>
+    </section>
+
+    <section class="card">
+      <div class="button-row">
+        <button id="saveConfig">In localStorage speichern</button>
+        <button id="exportConfig">JSON exportieren</button>
+        <label style="display:inline-flex;align-items:center;gap:.4rem;cursor:pointer;">
+          JSON importieren
+          <input type="file" id="importConfig" accept="application/json" style="display:none" />
+        </label>
+      </div>
+      <textarea id="configRaw" rows="12"></textarea>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+  <script src="driver.js"></script>
+  <script src="config-editor.js"></script>
+</body>
+</html>
