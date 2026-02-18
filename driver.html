@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PIS Fahreransicht</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="top-nav">
+    <strong>PIS · Fahrersteuerung</strong>
+    <div class="nav-links">
+      <a href="/">Anzeige</a>
+      <a href="/driver">Fahrer</a>
+      <a href="/config">Konfiguration</a>
+    </div>
+    <span></span>
+  </nav>
+
+  <main class="control-layout">
+    <section class="card">
+      <div class="field">
+        <label for="routeSelect">Route wählen</label>
+        <select id="routeSelect"></select>
+      </div>
+      <div class="button-row">
+        <button id="prevStop">Zurück</button>
+        <button id="nextStopBtn">Nächster</button>
+        <button id="setStop">Setzen</button>
+      </div>
+      <p id="activeStopText"></p>
+      <div id="driverStops" class="stop-list"></div>
+    </section>
+
+    <section class="card">
+      <div class="kicker">Verspätung</div>
+      <div class="button-row">
+        <button data-delay="1">+1 Min</button>
+        <button data-delay="5">+5 Min</button>
+        <button id="resetDelay">Reset</button>
+      </div>
+      <p id="delayInfo"></p>
+    </section>
+
+    <section class="card">
+      <div class="field">
+        <label for="templateSelect">Ansage‑Template</label>
+        <select id="templateSelect"></select>
+      </div>
+      <div class="field">
+        <label>Vorschau</label>
+        <textarea id="announcementPreview" rows="4" readonly></textarea>
+      </div>
+      <button id="triggerAnnouncement">Ansage auslösen</button>
+    </section>
+  </main>
+
+  <script src="driver.js"></script>
+</body>
+</html>

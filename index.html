@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DB‑orientiertes PIS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="top-nav">
+    <strong>PIS · Fahrgastanzeige</strong>
+    <div class="nav-links">
+      <a href="/">Anzeige</a>
+      <a href="/driver">Fahrer</a>
+      <a href="/config">Konfiguration</a>
+    </div>
+    <div id="clock"></div>
+  </nav>
+
+  <main class="screen">
+    <section class="panel destination-panel">
+      <div class="kicker">Fahrtziel</div>
+      <div id="linePill" class="line-pill">—</div>
+      <h1 id="destination">Keine aktive Route</h1>
+      <div id="viaStops" class="kicker"></div>
+    </section>
+
+    <section class="panel next-stop-panel">
+      <div>
+        <div class="kicker">Nächster Halt</div>
+        <div id="nextStop" class="next-stop">—</div>
+      </div>
+      <div class="status-grid">
+        <div class="status-item">
+          <div class="label">Gleis</div>
+          <div id="platform" class="value">—</div>
+        </div>
+        <div class="status-item">
+          <div class="label">Abfahrt</div>
+          <div id="plannedTime" class="value">—</div>
+        </div>
+        <div class="status-item">
+          <div class="label">Verspätung</div>
+          <div id="delay" class="value">+0 Min</div>
+        </div>
+        <div class="status-item">
+          <div class="label">Ausstieg</div>
+          <div id="doorSide" class="value">—</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="kicker">Informationsbereich</div>
+      <ul id="upcomingStops" class="info-list"></ul>
+      <div id="activeAnnouncement" class="announcement">Aktuelle Ansage: —</div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
